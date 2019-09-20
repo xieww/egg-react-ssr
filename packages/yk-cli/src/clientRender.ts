@@ -21,7 +21,7 @@ process.on && process.on('message', data => {
 const dev = () => {
   const compiler = webpack(clientConfig)
   const server = new WebpackDevServer(compiler, {
-    quiet: true,
+    // quiet: true,
     disableHostCheck: true,
     publicPath: '/',
     hotOnly: true,
@@ -29,7 +29,7 @@ const dev = () => {
     contentBase: cwd + '/dist',
     hot: true,
     port: 8000,
-    clientLogLevel: 'error',
+    // clientLogLevel: 'error',
     headers: {
       'access-control-allow-origin': '*'
     },

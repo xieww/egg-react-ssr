@@ -41,20 +41,26 @@ Module._extensions['.less'] = () => {}
 Module._extensions['.sass'] = () => {}
 Module._extensions['.css'] = () => {}
 
-const Layout = require(cwd + '/web/layout').default
-
-const reactToString = (Component: React.ComponentClass, props: object) => {
-  return renderToString(React.createElement(Component, props))
-}
-
-const props = {
-  layoutData: {
-    app: {
-      config: config
+console.log(process.env.TEST)
+let Layout
+let string
+try {
+   Layout = require(cwd + '/web/layout').default
+   const reactToString = (Component: React.ComponentClass, props: object) => {
+    return renderToString(React.createElement(Component, props))
+  }
+  const props = {
+    layoutData: {
+      app: {
+        config: config
+      }
     }
   }
+  string = reactToString(Layout, props)
+} catch (error) {
+  string = ''
 }
 
-const string = reactToString(Layout, props)
+
 
 module.exports = string
