@@ -17,8 +17,9 @@ module.exports = {
       Component: () => (__isBrowser__ ? require('ykfe-utils/lib/loadable')({
         loader: () => import(/* webpackChunkName: "news" */ '@/page/news'),
         loading: function Loading () {
-          return React.createElement('div')
-        }
+          return React.createElement('div', null, '123123')
+        },
+        webpack: () => [require.resolveWeak('@/page/news')],
       }) : require('@/page/news').default
       ),
       controller: 'page',

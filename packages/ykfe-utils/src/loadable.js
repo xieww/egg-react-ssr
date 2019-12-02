@@ -27,6 +27,7 @@ function load (loader) {
   }
   state.promise = promise
     .then(loaded => {
+      console.log(loaded)
       state.loading = false
       state.loaded = loaded
       return loaded
@@ -91,13 +92,14 @@ function resolve (obj) {
   return obj && obj.__esModule ? obj.default : obj
 }
 
-function render (loaded, props, Layout) {
+function render (loaded, props) {
   const Loadable = resolve(loaded)
-  return (
-    Layout ? <Layout>
-      <Loadable {...props} />
-    </Layout> : <Loadable {...props} />
-  )
+  return <Loadable {...props} />
+  // return (
+  //   Layout ? <Layout>
+  //     <Loadable {...props} />
+  //   </Layout> : <Loadable {...props} />
+  // )
 }
 
 function createLoadableComponent (loadFn, options) {
@@ -128,7 +130,6 @@ function createLoadableComponent (loadFn, options) {
   }
 
   ALL_INITIALIZERS.push(init)
-
   if (typeof opts.webpack === 'function') {
     READY_INITIALIZERS.push(() => {
       if (isWebpackReady(opts.webpack)) {
@@ -183,11 +184,11 @@ function createLoadableComponent (loadFn, options) {
       const props = this.props
       const WrappedComponent = this.state.loaded
       const extraProps = (WrappedComponent && WrappedComponent.default.getInitialProps) ? await WrappedComponent.default.getInitialProps(props) : {}
-      const Layout = WrappedComponent && WrappedComponent.default.Layout
+      // const Layout = WrappedComponent && WrappedComponent.default.Layout
       this.setState({
         extraProps,
         getProps: true,
-        Layout
+        // Layout
       })
     }
 
@@ -234,10 +235,10 @@ function createLoadableComponent (loadFn, options) {
         .then(async Module => {
           if (Module.default && Module.default.getInitialProps) {
             const moduleProps = await Module.default.getInitialProps(this.props)
-            const Layout = Module.default.Layout
+            // const Layout = Module.default.Layout
             this.setState({
               moduleProps,
-              Layout
+              // Layout
             })
           }
           update()
